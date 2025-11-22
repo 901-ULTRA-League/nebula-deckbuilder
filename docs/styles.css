@@ -369,6 +369,45 @@ button:active {
   color: var(--muted);
 }
 
+.tooltip {
+  position: absolute;
+  display: none;
+  padding: 10px;
+  background-color: #000;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  color: #fff;
+  z-index: 100;
+  max-width: 300px;
+  pointer-events: none; /* Allows interactions with elements behind the tooltip */
+  white-space: pre-wrap; /* Preserves whitespace and newlines */
+  transform: translate(10px, 10px); /* Offset from cursor */
+}
+
+.tooltip p {
+  margin: 0;
+}
+
+.bp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.bp-table td {
+  padding: 5px;
+  border-bottom: 1px solid #444;
+}
+
+.bp-table tr:last-child td {
+  border-bottom: none;
+}
+
+.bp-table td:last-child {
+  text-align: right;
+  font-weight: bold;
+}
+
 @media (max-width: 1100px) {
   .layout {
     grid-template-columns: 1fr;

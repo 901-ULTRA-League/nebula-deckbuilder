@@ -200,10 +200,8 @@ function renderCards(cards) {
     if (card.round) meta.appendChild(makeBadge(`Round ${card.round}`));
     content.appendChild(meta);
 
-    const effect = document.createElement("p");
-    effect.className = "card-meta";
-    effect.textContent = card.effect ? truncate(card.effect, 120) : "No effect text.";
-    content.appendChild(effect);
+    cardEl.dataset.effect = card.effect || "No effect text.";
+    cardEl.dataset.key = cardKey(card);
 
     const actions = document.createElement("div");
     actions.className = "card-actions";
@@ -663,9 +661,75 @@ function roundRect(ctx, x, y, w, h, r) {
   ctx.closePath();
 }
 
+function createTooltip() {
+  const tooltip = document.createElement("div");
+  tooltip.id = "tooltip";
+  tooltip.className = "tooltip";
+  document.body.appendChild(tooltip);
+
+  let currentCard = null;
+
+  cardsGrid.addEventListener("mouseover", (e) => {
+    const cardEl = e.target.closest(".card");
+    if (!cardEl) return;
+
+    const card = state.cardIndex.get(cardEl.dataset.key);
+    if (!card) return;
+
+    const effect = card.effect || "No effect text.";
+    
+    let bpTable = '';
+    const bpStats = {
+      "BP1": card.battle_power_1,
+      "BP2": card.battle_power_2,
+      "BP3": card.battle_power_3,
+      "BP4": card.battle_power_4,
+      "BPEX": card.battle_power_ex,
+    };
+
+    const validBpStats = Object.entries(bpStats).some(([, value]) => value !== undefined && value !== null);
+
+    if (validBpStats) {
+      bpTable = '<table class="bp-table">';
+      for (const [key, value] of Object.entries(bpStats)) {
+        if (value !== undefined && value !== null) {
+          bpTable += `<tr><td>${key}</td><td>${value}</td></tr>`;
+        }
+      }
+      bpTable += '</table>';
+    }
+
+    tooltip.innerHTML = `${bpTable}<p>${effect}</p>`;
+    tooltip.style.display = "block";
+    currentCard = cardEl;
+    
+    // Initial position
+    tooltip.style.left = `${e.pageX + 10}px`;
+    tooltip.style.top = `${e.pageY + 10}px`;
+  });
+
+  cardsGrid.addEventListener("mousemove", (e) => {
+    if (currentCard && tooltip.style.display === "block") {
+      tooltip.style.left = `${e.pageX + 10}px`;
+      tooltip.style.top = `${e.pageY + 10}px`;
+    }
+  });
+
+  cardsGrid.addEventListener("mouseout", (e) => {
+    // Check if the mouse is still within a card or entering a child element of the current card
+    // Use `relatedTarget` to determine where the mouse moved to
+    if (currentCard && e.relatedTarget && currentCard.contains(e.relatedTarget)) {
+      return;
+    }
+    tooltip.style.display = "none";
+    currentCard = null;
+  });
+}
+
 function init() {
   restoreApiBase();
   renderDeck();
+  createTooltip();
   fetchCards();
 }
 
