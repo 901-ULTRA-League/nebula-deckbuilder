@@ -231,6 +231,26 @@ function truncate(str, max) {
   return str.length > max ? `${str.slice(0, max)}…` : str;
 }
 
+function clampCanvasText(ctx, text, maxWidth) {
+  if (!text) return "";
+  const ellipsis = "...";
+  if (ctx.measureText(text).width <= maxWidth) return text;
+  let left = 0;
+  let right = text.length;
+  let result = ellipsis;
+  while (left < right) {
+    const mid = Math.floor((left + right) / 2);
+    const candidate = `${text.slice(0, mid)}${ellipsis}`;
+    if (ctx.measureText(candidate).width <= maxWidth) {
+      result = candidate;
+      left = mid + 1;
+    } else {
+      right = mid;
+    }
+  }
+  return result;
+}
+
 async function addCardToDeck(cardKeyValue) {
   const key = String(cardKeyValue);
   let card = state.cardIndex.get(key) || state.deck[key]?.card;
@@ -563,6 +583,9 @@ async function drawCardTile(ctx, card, count, x, y, w, h) {
     drawPlaceholder(ctx, x + padding, y + padding, imgAreaW, imgAreaH);
   }
 
+  const textMaxWidth = w - 24;
+  const detailMaxWidth = w - 72;
+
   // Gradient overlay
   const grad = ctx.createLinearGradient(x, y + h - 110, x, y + h);
   grad.addColorStop(0, "rgba(12,18,36,0.8)");
@@ -574,19 +597,21 @@ async function drawCardTile(ctx, card, count, x, y, w, h) {
   ctx.fillStyle = "#e8f0ff";
   ctx.font = "700 18px 'Archivo', 'Space Grotesk', sans-serif";
   ctx.textBaseline = "top";
-  ctx.fillText(truncate(card?.name || "Card", 28), x + 12, y + h - 102);
+  ctx.textAlign = "left";
+  ctx.fillText(clampCanvasText(ctx, card?.name || "Card", textMaxWidth), x + 12, y + h - 102);
 
   ctx.fillStyle = "#9fb3d9";
   ctx.font = "13px 'Archivo', 'Space Grotesk', sans-serif";
-  ctx.fillText(`${card?.number || "N/A"} • ${card?.rarity || "?"} • ${card?.feature || "?"}`, x + 12, y + h - 76);
+  const metaLine = [card?.number || "N/A", card?.rarity || "?", card?.feature || "?"].join(" | ");
+  ctx.fillText(clampCanvasText(ctx, metaLine, textMaxWidth), x + 12, y + h - 76);
   if (card?.type) {
-    ctx.fillText(`Type: ${card.type}`, x + 60, y + h - 58);
+    ctx.fillText(clampCanvasText(ctx, `Type: ${card.type}`, detailMaxWidth), x + 60, y + h - 58);
   }
   if (card?.level) {
-    ctx.fillText(`Level: ${card.level}`, x + 12, y + h - 58);
+    ctx.fillText(clampCanvasText(ctx, `Level: ${card.level}`, textMaxWidth), x + 12, y + h - 58);
   }
   if (card?.round) {
-    ctx.fillText(`Round: ${card.round}`, x + 12, y + h - 58);
+    ctx.fillText(clampCanvasText(ctx, `Round: ${card.round}`, textMaxWidth), x + 12, y + h - 58);
   }
   // if (card?.effect) {
   //   ctx.fillText(truncate(card.effect, 60), x + 12, y + h - 56);

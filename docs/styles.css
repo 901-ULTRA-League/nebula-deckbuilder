@@ -100,7 +100,7 @@ h2 {
 
 .layout {
   display: grid;
-  grid-template-columns: 320px 1fr 340px;
+  grid-template-columns: 320px 1fr 380px;
   gap: 18px;
   margin-top: 24px;
 }
@@ -331,7 +331,7 @@ button:active {
 
 .deck-row {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
@@ -344,6 +344,12 @@ button:active {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
+}
+
+.deck-title > div {
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .deck-controls {
