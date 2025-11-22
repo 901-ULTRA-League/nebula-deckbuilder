@@ -26,6 +26,8 @@ const errataFilter = document.getElementById("errata-filter");
 const cardCopyOverrides = {
   // "BP01-001": 8,
   // "SP99-777": 6,
+  "PR-036": 50,
+  "PR-107": 8
 };
 
 const state = {
