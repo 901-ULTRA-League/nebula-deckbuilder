@@ -593,7 +593,7 @@ async function drawCardTile(ctx, card, count, x, y, w, h) {
   // }
 
   // Quantity badge
-  const badgeW = 46;
+  const badgeW = 55;
   const badgeH = 26;
   ctx.fillStyle = "rgba(99,255,214,0.18)";
   ctx.strokeStyle = "rgba(99,255,214,0.5)";
