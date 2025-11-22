@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nebula Deckbuilder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="background-vignette"></div>
+  <div class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Nebula API</p>
+        <h1>ULTRAMAN Deckbuilder</h1>
+        <p class="lede">
+          Browse cards from the API, filter by rarity, type, or character, and assemble a deck that respects
+          the 50 card limit with up to 4 copies of any card.
+        </p>
+        <div class="rule-chip">Deck cap: 50 cards · Max 4 copies each</div>
+      </div>
+      <div class="hero-actions">
+        <label class="field">
+          <span>API base URL</span>
+          <input id="api-base" type="text" value="https://nebula-collection-api.vercel.app/" spellcheck="false">
+        </label>
+        <button id="refresh-btn" class="ghost">Refresh from API</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel filters">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Filters</p>
+            <h2>Find cards</h2>
+          </div>
+          <button id="reset-filters" class="ghost small">Reset</button>
+        </div>
+        <form id="filters-form" class="filters-grid">
+          <label class="field">
+            <span>Text search (name/effect)</span>
+            <input id="search-text" type="text" placeholder="e.g., Tiga or Plasma Spark">
+          </label>
+          <label class="field">
+            <span>Rarity</span>
+            <select id="rarity-filter">
+              <option value="">Any</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Feature</span>
+            <select id="feature-filter">
+              <option value="">Any</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Type</span>
+            <select id="type-filter">
+              <option value="">Any</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Level</span>
+            <input id="level-filter" type="number" min="1" max="10" placeholder="Any">
+          </label>
+          <label class="field">
+            <span>Round</span>
+            <input id="round-filter" type="number" min="1" max="10" placeholder="Any">
+          </label>
+          <label class="field">
+            <span>Character</span>
+            <input id="character-filter" type="text" placeholder="e.g., Zero">
+          </label>
+          <label class="field">
+            <span>Number</span>
+            <input id="number-filter" type="text" placeholder="BP01-001">
+          </label>
+          <label class="field">
+            <span>Publication year</span>
+            <select id="year-filter">
+              <option value="">Any</option>
+            </select>
+          </label>
+          <label class="checkbox-field">
+            <input id="errata-filter" type="checkbox">
+            <span>Only show errata-enabled</span>
+          </label>
+          <button type="submit" class="primary">Search cards</button>
+        </form>
+        <div id="status-banner" class="status">Ready to query the API.</div>
+      </section>
+
+      <section class="panel cards">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Card browser</p>
+            <h2>Results</h2>
+          </div>
+          <div class="pill" id="result-count">0 cards</div>
+        </div>
+        <div id="cards-grid" class="cards-grid"></div>
+      </section>
+
+      <section class="panel deck">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Deck</p>
+            <h2>Your list</h2>
+          </div>
+          <div class="deck-meta">
+            <div class="pill accent" id="deck-total">0 / 50</div>
+            <div class="pill subtle" id="deck-unique">0 unique</div>
+            <button id="clear-deck" class="ghost small">Clear deck</button>
+            <button id="export-deck" class="ghost small">Export JSON</button>
+            <button id="import-deck" class="ghost small">Import JSON</button>
+            <button id="export-deck-image" class="ghost small">Export Image</button>
+            <input id="import-file" type="file" accept="application/json" hidden>
+          </div>
+        </div>
+        <div id="deck-list" class="deck-list empty">No cards yet. Add from the results to start building.</div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
