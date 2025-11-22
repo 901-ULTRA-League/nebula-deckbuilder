@@ -19,6 +19,7 @@ const levelFilter = document.getElementById("level-filter");
 const roundFilter = document.getElementById("round-filter");
 const characterFilter = document.getElementById("character-filter");
 const numberFilter = document.getElementById("number-filter");
+const setFilter = document.getElementById("set-filter");
 const yearFilter = document.getElementById("year-filter");
 const errataFilter = document.getElementById("errata-filter");
 
@@ -67,23 +68,36 @@ function updateStatus(message, tone = "info") {
   if (tone === "error") statusBanner.classList.add("error");
 }
 
+function getCardSet(card) {
+  if (!card || !card.number) return null;
+  const num = card.number;
+  if (num.startsWith("PR")) return "PR";
+  const match = num.match(/^([A-Z]+)(\d+)-/);
+  if (!match) return null;
+  return `${match[1]}${match[2].padStart(2, '0')}`;
+}
+
 function updateFilterOptionsFromCards(cards) {
   const raritySet = new Set();
   const featureSet = new Set();
   const typeSet = new Set();
   const yearSet = new Set();
+  const setSet = new Set();
 
   cards.forEach((card) => {
     if (card.rarity) raritySet.add(card.rarity);
     if (card.feature) featureSet.add(card.feature);
     if (card.type) typeSet.add(card.type);
     if (card.publication_year) yearSet.add(card.publication_year);
+    const cardSet = getCardSet(card);
+    if (cardSet) setSet.add(cardSet);
   });
 
   applyOptions(rarityFilter, Array.from(raritySet).sort());
   applyOptions(featureFilter, Array.from(featureSet).sort());
   applyOptions(typeFilter, Array.from(typeSet).sort());
   applyOptions(yearFilter, Array.from(yearSet).sort((a, b) => a - b));
+  applyOptions(setFilter, Array.from(setSet).sort());
 }
 
 function sanitizeBase(base) {
@@ -141,7 +155,13 @@ async function fetchCards() {
 
   try {
     const url = `${sanitizeBase(state.apiBase)}/${endpoint}?${params.toString()}`;
-    const cards = await fetchJson(url);
+    let cards = await fetchJson(url);
+    
+    const selectedSet = setFilter.value;
+    if (selectedSet) {
+      cards = cards.filter(card => getCardSet(card) === selectedSet);
+    }
+
     state.cards = cards;
     state.cardIndex = new Map(cards.map((card) => [cardKey(card), card]));
     updateFilterOptionsFromCards(cards);
@@ -374,6 +394,7 @@ function resetFilters() {
   rarityFilter.value = "";
   featureFilter.value = "";
   typeFilter.value = "";
+  setFilter.value = "";
   yearFilter.value = "";
 }
 
