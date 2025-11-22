@@ -580,7 +580,7 @@ async function drawCardTile(ctx, card, count, x, y, w, h) {
   ctx.font = "13px 'Archivo', 'Space Grotesk', sans-serif";
   ctx.fillText(`${card?.number || "N/A"} • ${card?.rarity || "?"} • ${card?.feature || "?"}`, x + 12, y + h - 76);
   if (card?.type) {
-    ctx.fillText(`Type: ${card.type}`, x + 50, y + h - 58);
+    ctx.fillText(`Type: ${card.type}`, x + 60, y + h - 58);
   }
   if (card?.level) {
     ctx.fillText(`Level: ${card.level}`, x + 12, y + h - 58);
