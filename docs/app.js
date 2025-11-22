@@ -195,6 +195,9 @@ function renderCards(cards) {
     meta.appendChild(makeBadge(card.number || "N/A"));
     if (card.rarity) meta.appendChild(makeBadge(card.rarity));
     if (card.feature) meta.appendChild(makeBadge(card.feature));
+    if (card.type) meta.appendChild(makeBadge(card.type));
+    if (card.level) meta.appendChild(makeBadge(`Level ${card.level}`));
+    if (card.round) meta.appendChild(makeBadge(`Round ${card.round}`));
     content.appendChild(meta);
 
     const effect = document.createElement("p");
