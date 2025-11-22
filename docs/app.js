@@ -583,10 +583,10 @@ async function drawCardTile(ctx, card, count, x, y, w, h) {
     ctx.fillText(`Type: ${card.type}`, x + 12, y + h - 58);
   }
   if (card?.level) {
-    ctx.fillText(`Level: ${card.level}`, x + 100, y + h - 58);
+    ctx.fillText(`Level: ${card.level}`, x + 115, y + h - 58);
   }
   if (card?.round) {
-    ctx.fillText(`Round: ${card.round}`, x + 100, y + h - 58);
+    ctx.fillText(`Round: ${card.round}`, x + 115, y + h - 58);
   }
   // if (card?.effect) {
   //   ctx.fillText(truncate(card.effect, 60), x + 12, y + h - 56);
