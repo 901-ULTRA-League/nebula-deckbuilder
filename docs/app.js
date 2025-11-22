@@ -600,7 +600,7 @@ async function drawCardTile(ctx, card, count, x, y, w, h) {
   roundRect(ctx, x + w - badgeW - 10, y + 10, badgeW, badgeH, 8);
   ctx.fill();
   ctx.stroke();
-  ctx.fillStyle = "#000000ff";
+  ctx.fillStyle = "#63ffd6";
   ctx.font = "700 14px 'Archivo', 'Space Grotesk', sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
