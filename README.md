@@ -6,7 +6,7 @@ This is a lightweight, static web app that consumes the Nebula API to build ULTR
 
 1) Serve the deckbuilder (from repo root):
 ```bash
-python -m http.server 3000
+python -m http.server --directory docs 3000
 ```
 2) Open http://localhost:3000/ and ensure the API base URL field matches your API origin if it differs.
 
