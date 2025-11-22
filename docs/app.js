@@ -593,14 +593,14 @@ async function drawCardTile(ctx, card, count, x, y, w, h) {
   // }
 
   // Quantity badge
-  const badgeW = 55;
+  const badgeW = 46;
   const badgeH = 26;
   ctx.fillStyle = "rgba(99,255,214,0.18)";
   ctx.strokeStyle = "rgba(99,255,214,0.5)";
   roundRect(ctx, x + w - badgeW - 10, y + 10, badgeW, badgeH, 8);
   ctx.fill();
   ctx.stroke();
-  ctx.fillStyle = "#63ffd6";
+  ctx.fillStyle = "#000000ff";
   ctx.font = "700 14px 'Archivo', 'Space Grotesk', sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
