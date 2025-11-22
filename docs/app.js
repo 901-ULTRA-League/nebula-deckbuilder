@@ -152,10 +152,15 @@ async function fetchCards() {
 }
 
 function renderCards(cards) {
-  resultCount.textContent = `${cards.length} card${cards.length === 1 ? "" : "s"}`;
+  const total = cards.length;
+  const limitedCards = cards.slice(0, 20);
+  resultCount.textContent =
+    total > limitedCards.length
+      ? `Showing ${limitedCards.length} of ${total} cards`
+      : `${total} card${total === 1 ? "" : "s"}`;
   cardsGrid.innerHTML = "";
 
-  if (!cards.length) {
+  if (!total) {
     const empty = document.createElement("div");
     empty.className = "status";
     empty.textContent = "No cards matched these filters. Try broadening your search.";
@@ -163,7 +168,7 @@ function renderCards(cards) {
     return;
   }
 
-  cards.forEach((card) => {
+  limitedCards.forEach((card) => {
     const cardEl = document.createElement("div");
     cardEl.className = "card";
 
