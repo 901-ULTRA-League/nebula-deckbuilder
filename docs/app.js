@@ -579,9 +579,18 @@ async function drawCardTile(ctx, card, count, x, y, w, h) {
   ctx.fillStyle = "#9fb3d9";
   ctx.font = "13px 'Archivo', 'Space Grotesk', sans-serif";
   ctx.fillText(`${card?.number || "N/A"} • ${card?.rarity || "?"} • ${card?.feature || "?"}`, x + 12, y + h - 76);
-  if (card?.effect) {
-    ctx.fillText(truncate(card.effect, 60), x + 12, y + h - 56);
+  if (card?.type) {
+    ctx.fillText(`Type: ${card.type}`, x + 12, y + h - 58);
   }
+  if (card?.level) {
+    ctx.fillText(`Level: ${card.level}`, x + 100, y + h - 58);
+  }
+  if (card?.round) {
+    ctx.fillText(`Round: ${card.round}`, x + 100, y + h - 58);
+  }
+  // if (card?.effect) {
+  //   ctx.fillText(truncate(card.effect, 60), x + 12, y + h - 56);
+  // }
 
   // Quantity badge
   const badgeW = 46;
