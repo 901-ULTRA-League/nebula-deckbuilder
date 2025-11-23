@@ -369,6 +369,14 @@ button:active {
   color: var(--muted);
 }
 
+.footer {
+  margin-top: 18px;
+  padding: 16px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
 .tooltip {
   position: absolute;
   display: none;
