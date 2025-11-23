@@ -10,7 +10,7 @@ python -m http.server --directory docs 3000
 ```
 2) Open http://localhost:3000/ and ensure the API base URL field matches your API origin if it differs.
 
-## Features
+### Features
 
 - Browse cards with filters for rarity, type, feature, level/round, character, number, publication year, and errata.
 - Text search (name/effect) using the `/search` endpoint.
@@ -18,14 +18,16 @@ python -m http.server --directory docs 3000
 - Deck summary (total + unique), localStorage persistence between sessions, and JSON export/import for sharing decks.
 - Export decklist as a PNG image with card art, names, and quantities.
 
-## Notes
+### Notes
 
 - Filter dropdowns are populated from the currently fetched cards (using the card model fields), so options adapt to the visible result set.
 - All assets are static—no additional build step or dependencies are required.
 - To allow specific cards to exceed the 4-copy limit, edit `cardCopyOverrides` in `app.js` (keyed by card number/id) with the max copies you want to permit.
 
-## Saving and importing decks
+### Saving and importing decks
 
 - Use **Export JSON** in the Deck panel to download your current list (includes counts and card snapshots).
 - Use **Import JSON** to load a previously exported deck; the app will cap copies at 4 and the total at 50.
 - Use **Export Image** to download a PNG grid of your current deck (cards + quantities).
+
+© 2025 901 ULTRA League. All rights reserved.
