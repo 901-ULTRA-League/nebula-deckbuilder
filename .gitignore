@@ -1,0 +1,3 @@
+# Local env/config artifacts
+.env
+config.js

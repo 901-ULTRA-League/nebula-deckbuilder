@@ -4,11 +4,20 @@ This is a lightweight, static web app that consumes the Nebula API to build ULTR
 
 ## Running locally
 
-1) Serve the deckbuilder (from repo root):
+1) Set the API base URL either by exporting `API_URL` or creating a `.env` file (see `.env.example`).
+2) Generate `config.js` from the env value:
+```bash
+node build-config.js
+```
+3) Serve the deckbuilder (from repo root):
 ```bash
 python -m http.server 3000
 ```
-2) Open http://localhost:3000/ and ensure the API base URL field matches your API origin if it differs.
+4) Open http://localhost:3000/ and the API base URL will come from `config.js` (you can still override it in localStorage via devtools if needed).
+
+### Deploying to GitHub Pages
+
+- Ensure the Pages build (or a pre-deploy script) runs `node build-config.js` with the `API_URL` environment variable set. The script writes `config.js`, which the client reads at runtime.
 
 ### Features
 

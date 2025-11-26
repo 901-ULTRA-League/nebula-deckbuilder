@@ -9,6 +9,7 @@ const exportBtn = document.getElementById("export-deck");
 const importBtn = document.getElementById("import-deck");
 const importFile = document.getElementById("import-file");
 const exportImageBtn = document.getElementById("export-deck-image");
+const envApiBase = (window.__API_URL__ || "").trim();
 
 const filtersForm = document.getElementById("filters-form");
 const searchText = document.getElementById("search-text");
@@ -32,7 +33,7 @@ const cardCopyOverrides = {
 };
 
 const state = {
-  apiBase: apiBaseInput.value.trim(),
+  apiBase: envApiBase,
   deck: loadDeck(),
   cards: [],
   cardIndex: new Map(),
@@ -399,11 +400,11 @@ function resetFilters() {
 }
 
 function restoreApiBase() {
+  const envValue = envApiBase;
   const stored = localStorage.getItem("nebula_api_base");
-  if (stored) {
-    state.apiBase = stored;
-    apiBaseInput.value = stored;
-  }
+  const value = (stored && stored.trim()) || envValue || "";
+  state.apiBase = value;
+  apiBaseInput.value = value;
 }
 
 function saveApiBase(value) {
