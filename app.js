@@ -427,6 +427,7 @@ function snapshotCard(card) {
   const fields = [
     "name",
     "type_name",
+    "character_name",
     "number",
     "rarity",
     "feature",
