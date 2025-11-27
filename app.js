@@ -425,8 +425,8 @@ function loadImage(url) {
 function snapshotCard(card) {
   if (!card) return null;
   const fields = [
-    "id",
     "name",
+    "type_name",
     "number",
     "rarity",
     "feature",
@@ -434,8 +434,12 @@ function snapshotCard(card) {
     "level",
     "round",
     "effect",
+    "battle_power_1",
+    "battle_power_2",
+    "battle_power_3",
+    "battle_power_4",
+    "battle_power_ex",
     "image_url",
-    "thumbnail_image_url",
   ];
   const copy = {};
   fields.forEach((f) => {
